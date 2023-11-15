@@ -122,7 +122,7 @@ bottomNavigationBar: BottomAppBar(
   }
 ```
 
-7. Create Widget for line indicator tab.
+7. Create Widget for line indicator tab and add to Stack
 ```dart
     ...
     child: Stack(
@@ -165,3 +165,71 @@ bottomNavigationBar: BottomAppBar(
     );
   }
 ```
+
+8. The last and not the least create and impl widget for item navigation
+```dart
+    ...
+    child: Stack(
+        children: [
+            // For Background's gradient
+            tabGradientBackground()
+
+            /// For the line indicator
+            upperLineTabIndicator();
+
+            /// For the item tabbar
+            tabItemNavigation(widget.listOfItemPage)
+        ],
+    ),
+
+  Row tabItemNavigation(List<NavigationItemModel> pages) {
+    return Row(
+      children: List.generate(
+        pages.length,
+        (index) => SizedBox(
+          height: 56,
+          width: SizeUtils(context, tabController).tabWidth,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                tabController.animateTo(index);
+              },
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        pages[index].icon,
+                        color: tabController.index == index
+                            ? Colors.green.shade900
+                            : Colors.grey.shade700,
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        pages[index].label,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: tabController.index == index
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                          color: tabController.index == index
+                              ? Colors.green.shade900
+                              : Colors.grey.shade700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+...
