@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabbar_margin_animation/size_utils.dart';
 
 import 'navigator_item_model.dart';
 
@@ -58,7 +59,42 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         child: SizedBox(
           height: 56,
           child: Stack(
-            children: [],
+            children: [
+              buildBackgroundGradasi()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  AnimatedBuilder buildBackgroundGradasi() {
+    return AnimatedBuilder(
+      animation: tabController.animation ?? tabController,
+      builder: (context, child) => Positioned(
+        left: SizeUtils(context, tabController).leftPosition,
+        child: Center(
+          child: SizedBox(
+            width: SizeUtils(context, tabController).tabWidth,
+            height: 56,
+            child: AnimatedOpacity(
+              opacity: tabController.offset == 0 ? 1 : 0,
+              duration: kThemeAnimationDuration,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 0),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.greenAccent.shade700.withOpacity(.4),
+                      Colors.greenAccent.shade700.withOpacity(0.1),
+                      Colors.greenAccent.shade700.withOpacity(0),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),
