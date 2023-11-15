@@ -60,8 +60,39 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           height: 56,
           child: Stack(
             children: [
-              buildBackgroundGradasi()
+              buildBackgroundGradasi(),
+
+              buildIndikatorAtas()
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  AnimatedBuilder buildIndikatorAtas() {
+    var marginValue = SizeUtils(context, tabController).marginValue;
+    return AnimatedBuilder(
+      animation: tabController.animation ?? tabController,
+      builder: (context, child) => Positioned(
+        left: SizeUtils(context, tabController).leftPosition -
+            (!tabController.offset.isNegative
+                ? 0
+                : calculateMargin(tabController.offset, marginValue)),
+        right: SizeUtils(context, tabController).rightPosition -
+            (tabController.offset.isNegative
+                ? 0
+                : calculateMargin(tabController.offset, marginValue)),
+        child: SizedBox(
+          height: 6,
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.green.shade800,
+                borderRadius: const BorderRadius.vertical(
+                    bottom: Radius.circular(32), top: Radius.circular(8)),
+              ),
+            ),
           ),
         ),
       ),

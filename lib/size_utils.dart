@@ -15,3 +15,8 @@ class SizeUtils {
       tabWidth;
   double get marginValue => screenWidth / (tabController.length * 2) - 4;
 }
+
+double calculateMargin(double value, double desired) {
+  value = value.abs();
+  return value <= 0.5 ? (value * 2 * desired) : ((1 - value) * 2 * desired);
+}

@@ -74,6 +74,7 @@ bottomNavigationBar: BottomAppBar(
     ...
     child: Stack(
         children: [
+            // For Background's gradient
             buildBackgroundGradasi()
         ],
     ),
@@ -104,6 +105,46 @@ bottomNavigationBar: BottomAppBar(
                     end: Alignment.bottomCenter,
                   ),
                 ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+```
+
+7. Adding new function in size_utils.dart for determinte margin's line indicator tab
+```dart
+  double calculateMargin(double value, double desired) {
+    value = value.abs();
+    return value <= 0.5 ? (value * 2 * desired) : ((1 - value) * 2 * desired);
+  }
+```
+
+7. Create Widget for line indicator tab.
+```dart
+  AnimatedBuilder buildIndikatorAtas() {
+    var marginValue = SizeUtils(context, tabController).marginValue;
+    return AnimatedBuilder(
+      animation: tabController.animation ?? tabController,
+      builder: (context, child) => Positioned(
+        left: SizeUtils(context, tabController).leftPosition -
+            (!tabController.offset.isNegative
+                ? 0
+                : calculateMargin(tabController.offset, marginValue)),
+        right: SizeUtils(context, tabController).rightPosition -
+            (tabController.offset.isNegative
+                ? 0
+                : calculateMargin(tabController.offset, marginValue)),
+        child: SizedBox(
+          height: 6,
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.green.shade800,
+                borderRadius: const BorderRadius.vertical(
+                    bottom: Radius.circular(32), top: Radius.circular(8)),
               ),
             ),
           ),
