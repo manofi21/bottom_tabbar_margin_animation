@@ -75,12 +75,12 @@ bottomNavigationBar: BottomAppBar(
     child: Stack(
         children: [
             // For Background's gradient
-            buildBackgroundGradasi()
+            tabGradientBackground()
         ],
     ),
     ...
 
-  AnimatedBuilder buildBackgroundGradasi() {
+  AnimatedBuilder tabGradientBackground() {
     return AnimatedBuilder(
       animation: tabController.animation ?? tabController,
       builder: (context, child) => Positioned(
@@ -124,7 +124,19 @@ bottomNavigationBar: BottomAppBar(
 
 7. Create Widget for line indicator tab.
 ```dart
-  AnimatedBuilder buildIndikatorAtas() {
+    ...
+    child: Stack(
+        children: [
+            // For Background's gradient
+            tabGradientBackground()
+
+            /// For the line indicator
+            upperLineTabIndicator();
+        ],
+    ),
+    ...
+
+  AnimatedBuilder upperLineTabIndicator() {
     var marginValue = SizeUtils(context, tabController).marginValue;
     return AnimatedBuilder(
       animation: tabController.animation ?? tabController,

@@ -60,9 +60,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           height: 56,
           child: Stack(
             children: [
-              buildBackgroundGradasi(),
+              /// For the background
+              tabGradientBackground(),
+              
+              /// For the line indicator
+              upperLineTabIndicator(),
 
-              buildIndikatorAtas()
+              /// For the item tabbar
+              tabItemNavigation(widget.listOfItemPage)
             ],
           ),
         ),
@@ -70,7 +75,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     );
   }
 
-  AnimatedBuilder buildIndikatorAtas() {
+  AnimatedBuilder upperLineTabIndicator() {
     var marginValue = SizeUtils(context, tabController).marginValue;
     return AnimatedBuilder(
       animation: tabController.animation ?? tabController,
@@ -99,7 +104,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     );
   }
 
-  AnimatedBuilder buildBackgroundGradasi() {
+  AnimatedBuilder tabGradientBackground() {
     return AnimatedBuilder(
       animation: tabController.animation ?? tabController,
       builder: (context, child) => Positioned(
@@ -122,6 +127,57 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row tabItemNavigation(List<NavigationItemModel> pages) {
+    return Row(
+      children: List.generate(
+        pages.length,
+        (index) => SizedBox(
+          height: 56,
+          width: SizeUtils(context, tabController).tabWidth,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                tabController.animateTo(index);
+              },
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        pages[index].icon,
+                        color: tabController.index == index
+                            ? Colors.green.shade900
+                            : Colors.grey.shade700,
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        pages[index].label,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: tabController.index == index
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                          color: tabController.index == index
+                              ? Colors.green.shade900
+                              : Colors.grey.shade700,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
