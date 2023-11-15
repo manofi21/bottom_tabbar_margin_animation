@@ -32,3 +32,37 @@ tabController.previousIndex != tabController.index) {
     }
 }
 ```
+
+3. Implementing controller in TabBarView
+```dart
+    return Scaffold(
+      body: TabBarView(
+        controller: tabController,
+        children: List.generate(
+          tabController.length,
+          (index) => Center(
+            child: Text(
+              index.toString(),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 72,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+```
+
+4. Adding bottomNavigationBar under scafold's body, and place BottomAppBar in parameter.
+```dart
+body:..
+bottomNavigationBar: BottomAppBar(
+    child: SizedBox(
+        height: 56,
+        child: Stack(
+            children: [],
+        ),
+    ),
+),
+```

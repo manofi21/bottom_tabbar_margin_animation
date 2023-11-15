@@ -38,6 +38,30 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: TabBarView(
+        controller: tabController,
+        children: List.generate(
+          tabController.length,
+          (index) => Center(
+            child: Text(
+              index.toString(),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 72,
+              ),
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: SizedBox(
+          height: 56,
+          child: Stack(
+            children: [],
+          ),
+        ),
+      ),
+    );
   }
 }
