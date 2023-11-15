@@ -3,14 +3,32 @@
 A new Flutter project.
 
 ## Getting Started
+1. Adding parameter TabController.
+```dart
+  late TabController tabController = TabController(
+    length: pages.length,
+    vsync: this,
+    animationDuration: kThemeAnimationDuration,
+  );
+```
 
-This project is a starting point for a Flutter application.
+2. Adding variable currentIndex, and tabListener's function. After that listen the function in tabController in initState using `addListener`.
+```dart
+int currentIndex = 0;
 
-A few resources to get you started if this is your first Flutter project:
+  @override
+  void initState() {
+    tabController.addListener(tabListener);
+    super.initState();
+  }
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+/// This function just for check if the tab been changed or updated. 
+/// Update the `currentIndex` variable if that happen.
+void tabListener() {
+    if (!tabController.indexIsChanging &&
+tabController.previousIndex != tabController.index) {
+        currentIndex = tabController.index;
+        setState(() {});
+    }
+}
+```
