@@ -5,6 +5,36 @@ A new Flutter project.
 ![WhatsApp Video 2023-11-16 at 02 27 13](https://user-images.githubusercontent.com/54527045/283226479-5c329e70-16f8-4e61-95d8-e95d108378c4.gif)
 
 ## Getting Started
+1. Create Stateful widget with naming the widget `MainPage`
+```dart
+class MainPage extends StatefulWidget {
+  ....
+}
+```
+
+2. And adding the parameter with type of the variable `List<NavigationItemModel>`
+```dart
+  final List<NavigationItemModel> listOfItemPage;
+  const MainPage({
+    super.key,
+    required this.listOfItemPage,
+  });
+```
+
+3. Implementing the widget in `main.dart`
+```dart
+  home: MainPage(
+    listOfItemPage: [
+      NavigationItemModel(label: 'Home', icon: Icons.home_rounded),
+      NavigationItemModel(label: 'Food', icon: Icons.fastfood_rounded),
+      NavigationItemModel(label: 'Pay', icon: Icons.payments_rounded),
+      NavigationItemModel(label: 'Promo', icon: Icons.discount_rounded),
+      NavigationItemModel(label: 'Message', icon: Icons.inbox_rounded),
+    ],
+  ),
+```
+
+## Creating the widget
 1. Adding parameter TabController.
 ```dart
   late TabController tabController = TabController(
